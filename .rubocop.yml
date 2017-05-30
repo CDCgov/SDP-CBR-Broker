@@ -1,0 +1,53 @@
+inherit_from: .rubocop_todo.yml
+AllCops:
+  TargetRubyVersion: 2.2
+  Exclude:
+    - 'bin/**/*'
+    - 'db/schema.rb'
+Rails:
+  Enabled: true
+Rails/TimeZone:
+  Enabled: false
+  
+Metrics/BlockLength:
+  Exclude:
+    - 'config/routes.rb'
+    - 'lib/tasks/admin.rake'
+Metrics/LineLength:
+  Max: 150
+  Exclude:
+    - 'test/**/*'
+Metrics/BlockLength:
+  Exclude:
+    - 'config/environments/*'
+    - 'config/routes.rb'
+    - 'test/**/*'
+    - 'db/migrate/*'
+Metrics/MethodLength:
+  CountComments: false  # count full line comments?
+  Max: 30
+  Exclude:
+    - 'db/migrate/*'
+Metrics/ClassLength:
+  Max: 200
+  Exclude:
+    - 'test/**/*'
+Metrics/AbcSize:
+  # The ABC size is a calculated magnitude, so this number can be a Fixnum or
+  # a Float.
+  Max: 30
+  Exclude:
+    - 'test/**/*.rb'
+Metrics/ModuleLength:
+  Exclude:
+# Avoid complex methods.
+Metrics/CyclomaticComplexity:
+  Max: 10
+Metrics/PerceivedComplexity:
+  Max: 10
+
+Style/GuardClause:
+  Enabled: false
+
+#Style/HashSyntax:
+#  UseHashRocketsWithSymbolValues: true

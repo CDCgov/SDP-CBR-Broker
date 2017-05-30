@@ -1,0 +1,34 @@
+development:
+  adapter: postgresql
+  database: sdp_cbr_developement
+  # host: 10.0.0.2 # Optional
+  # port: 5432 # Optional
+  # owner: owner_name # Optional
+  # encoding: utf8 # Optional, also accept 'charset' as key, if both are present 'encoding' is used (defaults to 'utf8')
+  # maintenance_db: template2 # Optional
+  # locale: en_US.UTF-8 # Optional, equivalent to setting 'collation' and 'ctype' to the same value
+  # collation: en_US.UTF-8 # Optional
+  # ctype: en_US.UTF-8 # Optional
+  # template: template1 # Optional
+  # tablespace: non_default_tablespace_name # Optional
+  # max_connections: 20 # Optional, also accept 'pool' as key, if both are present 'max_connections' is used (default to nil, Sequel default is 4)
+  # url: "postgres://myuser:mypass@host/somedatabase" # Optional, if present it's passed to `Sequel.connect` with other config as options
+  #                                                   # If url is not set in config file, environment variable `DATABASE_URL` is used
+
+
+test:
+  adapter: postgresql
+  database: sdp_cbr_test
+  # host: 10.0.0.2 # Optional
+  # port: 5432 # Optional
+  # owner: owner_name # Optional
+  # encoding: utf8 # Optional, also accept 'charset' as key, if both are present 'encoding' is used (defaults to 'utf8')
+  # maintenance_db: template2 # Optional
+  # locale: en_US.UTF-8 # Optional, equivalent to setting 'collation' and 'ctype' to the same value
+  # collation: en_US.UTF-8 # Optional
+  # ctype: en_US.UTF-8 # Optional
+  # template: template1 # Optional
+  # tablespace: non_default_tablespace_name # Optional
+  # max_connections: 20 # Optional, also accept 'pool' as key, if both are present 'max_connections' is used (default to nil, Sequel default is 4)
+  # url: "postgres://myuser:mypass@host/somedatabase" # Optional, if present it's passed to `Sequel.connect` with other config as options
+  #                                                   # If url is not set in config file, environment variable `DATABASE_URL` is used
