@@ -32,3 +32,5 @@ test:
   # max_connections: 20 # Optional, also accept 'pool' as key, if both are present 'max_connections' is used (default to nil, Sequel default is 4)
   # url: "postgres://myuser:mypass@host/somedatabase" # Optional, if present it's passed to `Sequel.connect` with other config as options
   #                                                   # If url is not set in config file, environment variable `DATABASE_URL` is used
+production:
+  url: <%= ENV['CBR_DB_URL'] %>
