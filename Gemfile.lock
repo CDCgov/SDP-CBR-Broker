@@ -147,6 +147,7 @@ DEPENDENCIES
   omniauth
   postgresql
   puma (~> 3.0)
+  rack
   rails (~> 5.0.3)
   sequel-rails
   spring
