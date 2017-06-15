@@ -1,0 +1,189 @@
+swagger: '2.0'
+info:
+  description: Simple API for polling messages from SDP-CBR
+  version: 1.0.0
+  title: CBR Message Broker API
+
+# all paths will be relative to the basePath specified
+# basePath: /v1
+schemes:
+- https
+paths:
+  /messages/{id}:
+    parameters:
+    -
+      name: id
+      in: path
+      required: true
+      description: the id of the message
+      type: string
+
+    get:
+      summary: obtains a given message from the queue
+      operationId: getMessage
+      description: |
+        obtains a given message from the queue.
+      produces:
+      - application/json
+      responses:
+        200:
+          description: the message
+          schema:
+            $ref: '#/definitions/MessageWrapper'
+        404:
+          description: Message not found
+
+  /messages/{id}/read:
+    parameters:
+    -
+      name: id
+      in: path
+      required: true
+      description: the id of the message
+      type: string
+    post:
+      summary: Marks messages as recieved
+      operationId: markMessageRead
+      description: Removes a message from the queue
+      responses:
+        204:
+          description: message maked as read
+        404:
+          description: message not found
+  /messages:
+    get:
+      summary: polls for current messages
+      operationId: getMessages
+      description: |
+        Obtains a list of messages in the queue. Messages will be returned in the order that they were added to the queue
+      produces:
+      - application/json
+      parameters:
+      - in: query
+        name: limit
+        description: maximum number of messages to return.
+        type: integer
+        format: int32
+        minimum: 0
+      responses:
+        200:
+          description: search results matching criteria
+          schema:
+            $ref: '#/definitions/MessageResponse'
+        400:
+          description: bad input parameter
+  /messages/read:
+    post:
+      summary: bulk message
+      operationId: markRead
+      description: Used to mark n number of messages as read
+      parameters:
+      - in: body
+        name: ids
+        schema:
+          $ref: '#/definitions/MessageIds'
+      responses:
+        200:
+          description: Successfully marked all messages as read and removed from queue
+definitions:
+  MessageIds:
+    properties:
+      ids:
+        type: array
+        items:
+          type: string
+  MessageResponse:
+    type: object
+    required:
+    - totalMessages
+    - totalReturned
+    - messages
+    properties:
+      totalMessages:
+        type: integer
+      totalReturned:
+        type: integer
+      messages:
+        type: array
+        items:
+          $ref: '#/definitions/MessageWrapper'
+
+  MessageWrapper:
+    type: object
+    required:
+      - url
+      - read_url
+      - content
+    properties:
+      url:
+        type: string
+        format: url
+        description: Url to the message
+      read_url:
+        type: string
+        format: url
+        description: Url used to mark the message as read
+      content:
+        $ref: '#/definitions/Message'
+  Message:
+    type: object
+    required:
+    - id
+    - source
+    - source_id
+    - source_received_time
+    - source_attributes
+    - payload
+    - sender
+    - recipient
+    - cbr_received_time
+    - batch
+    - batch_id
+    - batch_index
+    properties:
+      id:
+        type: string
+        format: string
+        description: The CBR identifier for the message. The general case for this field will be a concatination of the source, source_id and batch_index if applicable
+        example: source_source_id_batch_index
+      source:
+        type: string
+        description: The identifier of the source system that the message was obtained from
+        example: phin_ms
+      source_id:
+        type: string
+        description: The message identifier from the source system.
+        example: 1
+      source_received_time:
+        type: string
+        description: The time the message was received by the source system, the value will be formatted as defined by RFC3339, e.g. 1985-04-12T23:20:50.52Z for times in UTC or 1996-12-19T16:39:57-08:00 for times in other time zones. When this information is not available from the source system this field will be null.
+        example: 2016-08-29T09:12:33.001Z
+      source_attributes:
+        type: object
+        description: Name value pairs of addtional information provided by the source of the message
+      payload:
+        type: string
+        description: the message from the source system
+        example: MSN|sdfsf|sdfsdfdsf|sdfsdfsdf|....
+      sender:
+        type: string
+        description: If available from the source this will contain the information about the sender of the message.  If this information cannot be dervied from the source this field will be null
+      recipient:
+        type: string
+        description: If available from the source this will contain the information about the intended recipient of the message.  If this information cannot be dervied from the source this filed will be null
+      cbr_received_time:
+        type: string
+        description: The time the message was received by the CBR service, the value is formatted as per SOURCE_RECEIVED_TIME.
+        example: 2016-08-29T09:12:33.001Z
+      batch:
+        type: boolean
+        description: whether or not the message is a batch message and has been split into individual messages.  If it is a batch message and has not been split this will be false
+        example: true
+      batch_id:
+        type: string
+        description: The identifier of the individual batch within a message. If the batch does not contain an identifier this field  will be will be generated with the following format. BATCH_INDEX_{index}
+        example: 1
+      batch_index:
+        type: integer
+        description: If the message is a batch message and has been split this will contain the index of the message inside a specific batch.  Index postion starts at 0.  This field has no meaning if the batch property is set to false
+        example: 1 
