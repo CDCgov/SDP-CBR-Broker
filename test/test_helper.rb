@@ -1,6 +1,16 @@
 ENV['RAILS_ENV'] ||= 'test'
+require 'simplecov'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
+
+# Minitest::Reporters adds color and progress bar to the test runner
+require 'minitest/reporters'
+Minitest::Reporters.use!(
+  [Minitest::Reporters::HtmlReporter.new(reports_dir: 'reports/mini_test'),
+   Minitest::Reporters::DefaultReporter.new(color: true)],
+  ENV,
+  Minitest.backtrace_filter
+)
 
 OmniAuth.config.test_mode = true
 OmniAuth.config.mock_auth[:developer] = OmniAuth::AuthHash.new(uid: 'default_test_user')

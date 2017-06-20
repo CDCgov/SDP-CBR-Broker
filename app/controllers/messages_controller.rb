@@ -24,7 +24,7 @@ class MessagesController < ApplicationController
     current_user.queue.where(id: params[:ids]).each do |message|
       set_message_read(message, current_user.queue)
     end
-    render status: 204, plain: ""
+    render status: 204, plain: ''
   end
 
   private

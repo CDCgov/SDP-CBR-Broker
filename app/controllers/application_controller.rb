@@ -5,8 +5,8 @@ class ApplicationController < ActionController::Base
 
   def current_user
     @current_user ||= Account.first(uid: session[:user_id]) if session[:user_id]
-  rescue Exception => e
-    nil
+  rescue => e
+    log.error(e)
   end
 
   def authenticate_user!

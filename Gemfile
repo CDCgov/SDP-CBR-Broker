@@ -30,3 +30,14 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
+
+group :test do
+  gem 'rubocop'
+  gem 'mocha', require: false
+  gem 'minitest'
+  gem 'minitest-rails'
+  gem 'minitest-reporters'
+  gem 'simplecov', require: false
+  gem 'brakeman', require: false
+  gem 'bundler-audit'
+end
