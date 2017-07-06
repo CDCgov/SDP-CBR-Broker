@@ -6,4 +6,7 @@ Rails.application.routes.draw do
   match '/auth/:provider/callback' => 'sessions#create', via: [:get, :post]
   get '/signout' => 'sessions#destroy', :as => :signout
   get '/auth/failure' => 'sessions#failure'
+
+  root to: redirect('/messages')
+
 end
