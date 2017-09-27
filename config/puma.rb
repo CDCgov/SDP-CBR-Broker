@@ -15,6 +15,15 @@ port        ENV.fetch('PORT') { 3000 }
 #
 environment ENV.fetch('RAILS_ENV') { 'development' }
 
+# When verify_mode is anything other than 'none' you need to supply a CA argument
+# puma's dsl.rb does not provide for this, but they also don't sanitize opts
+if (true)
+  ssl_bind "127.0.0.1", 3001, {
+    key: "/etc/ssl/newkey.pem",
+    cert: "/etc/ssl/newcert.pem",
+    verify_mode: "peer&ca=/etc/ssl/demoCA/cacert.pem"
+  }
+end
 # Specifies the number of `workers` to boot in clustered mode.
 # Workers are forked webserver processes. If using threads and workers together
 # the concurrency of the application would be max `threads` * `workers`.

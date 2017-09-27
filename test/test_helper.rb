@@ -2,9 +2,6 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 
-OmniAuth.config.test_mode = true
-OmniAuth.config.mock_auth[:developer] = OmniAuth::AuthHash.new(uid: 'default_test_user')
-
 class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
 
