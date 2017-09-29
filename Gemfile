@@ -11,7 +11,6 @@ gem 'rails', '~> 5.0.3'
 gem 'puma', '~> 3.0'
 gem 'sequel-rails'
 gem 'postgresql'
-gem 'omniauth'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
